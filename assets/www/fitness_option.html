@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kusa App Fitness / Nastavení</title>
+
+<link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
+<link rel="stylesheet" href="css/kusa.css" />
+<script type="text/javascript"  src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery.mobile-1.1.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/cordova-1.7.0.js"></script>
+<script src="js/kusa.js"></script>
+</head>
+<body>
+	
+<div data-role="page" data-add-back-btn="true" data-theme="b">
+
+	<div data-role="header">
+		<h1>Nstavení</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<form> 
+			<label for="repeat">Opakování:</label>
+			<select name="slider" id="repeat" data-role="slider" data-mini="true" >
+				<option value="off">Ne</option>
+				<option value="on">Ano</option>
+			</select> 
+
+			<label for="phase1">Fáze 1 sec.:</label>
+            <input type="text" data-mini="true" name="name" id="phase1" value=""  />
+            <label for="phase2">Fáze 2 sec.:</label>
+            <input type="text" data-mini="true" name="name" id="phase2" value=""  />
+            <label for="phase3">Fáze 3 sec.:</label>
+            <input type="text" data-mini="true" name="name" id="phase3" value=""  />
+            <label for="phase4">Fáze 4 sec.:</label>
+            <input type="text" data-mini="true" name="name" id="phase4" value=""  />
+            
+            <a href="" data-role="button" data-inline="true" data-mini="true">Uložit</a>
+		</form> 
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<div class="connection" name="connection">Spojení: <span></span></div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+.connection{
+    font-weight:bold;
+    color:#96CDCD;
+    margin:0px auto;
+    text-align:center;
+    margin:0.4em auto;
+}
+
+.connection span{
+    color:#3299CC;
+}
+
+.connection span.none{
+    color:#EE3B3B;
+}
