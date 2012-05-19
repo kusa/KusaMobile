@@ -15,3 +15,16 @@
 .connection span.none{
     color:#EE3B3B;
 }
+
+.fitnessTime{
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    text-shadow: #6374AB 2px 2px 2px;
+    font-size:3.8em;
+}
+
+.falarm{
+    background-color:#DBDB70;
+    color:white;
+}
