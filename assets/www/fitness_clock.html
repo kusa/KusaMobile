@@ -22,10 +22,11 @@
 	</div><!-- /header -->
 
 	<div data-role="content">	
-		<h2>Stopky</h2>
+
 			
-		<a href="javascript:void(0)" data-role="button" name="fitnessStart" id="fstart" data-theme="d" >START</a>
-		<a href="javascript:void(0)" data-role="button" class="hide" name="fitnessStart" id="fstop"  data-theme="e" >STOP</a>
+		<a href="#" data-role="button" data-ajax="false" id="fstart" data-theme="d" >START</a>
+		
+		<a href="#" data-role="button" data-ajax="false" class="hide" id="fstop"  data-theme="e" >STOP</a>
 		
 		<br />
 		<div class="fitnessTime" id="fTime">00:00</div>
@@ -37,7 +38,12 @@
 				<li> </li>
 			</ul>
 			
-		
+		<br />
+		<a href="#" data-role="button" name="fitnessQuick" data-spec="1" >30 sec. repeat</a>
+		<a href="#" data-role="button" name="fitnessQuick" data-spec="2" >60 sec. repeat</a>
+		<a href="#" data-role="button" name="fitnessQuick" data-spec="3" >30 sec. norepeat</a>
+		<a href="#" data-role="button" name="fitnessQuick" data-spec="4" >2 min. norepeat</a>
+		<a href="#" data-role="button" name="fitnessQuick" data-spec="5" >10 sec.. norepeat</a>
 	</div><!-- /content -->
 
 	<div data-role="footer">
