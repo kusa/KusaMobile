@@ -28,3 +28,12 @@
     background-color:#DBDB70;
     color:white;
 }
+
+
+#fitnessPhases .hide{
+    display:none;
+}
+
+.hide{
+    display:none;
+}

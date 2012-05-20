@@ -4,7 +4,7 @@ var connectionType = "Unknown";
 document.addEventListener("deviceready", onDeviceReady, false);
  function onDeviceReady() {
      setInterval("checkConnection()", 30000);
-     checkConnection()
+     checkConnection();
  }
 
  /** Connection **/
@@ -32,12 +32,18 @@ document.addEventListener("deviceready", onDeviceReady, false);
  /** Fitness **/
  var fitnessDef = []; /*Pocet sekund pro kazdou fazy*/
  var fitnessRepeat = false; /*Opakovani cyklu*/
+ var fitnessStart = false;
+ var fInterval = null;
+ 
+ $(document).bind('pageinit', function(){
+	 $("#fitnessPhases li").addClass("hide");
+ })
  
  $("#fitnessSave").live("vclick", function(){
 	 fitness.saveOption();
  })
  
-  $("#fitnessStart").live("vclick", function(){
+  $("[name='fitnessStart']").live("vclick", function(){
 	 fitness.start();
  })
  
@@ -49,17 +55,68 @@ document.addEventListener("deviceready", onDeviceReady, false);
  
  fitness.start = function()
  {
-	 fitness.test()
+	 if (fitnessDef.length == 0) {navigator.notification.alert("Není definován žádný interval");return;}
+	 
+	 fitnessStart = (fitnessStart?false:true);
+	 console.log("fitnessStart " +fitnessStart)
+	 if (!fitnessStart) {
+		 $("#fitnessPhases li").addClass("hide");
+		 $("#fTime").text("00:00");
+		 $("#fstop").addClass("hide");$("#fstart").removeClass("hide");
+	 } else {
+		 
+		 $("#fstop").removeClass("hide");$("#fstart").addClass("hide");
+		 fEtap = 0;
+		 fSeconds = 0;
+		 
+		 fitness.runFitness();
+	 }
+ }
+ 
+ fitness.runFitness = function()
+ {
+	 if (!fitnessStart) return;
+	 clearTimeout(fInterval);
+	 console.log("Seconds "+fSeconds);
+	 fSeconds++;
+	 var virtEtap = fEtap + 1;
+	 if (fSeconds > fitnessDef[fEtap] && typeof fitnessDef[virtEtap] != "undefined") {
+		 fSeconds = 0;
+		 fEtap++;console.log("Stav " +1);
+	 } else if (fSeconds > fitnessDef[fEtap] && typeof fitnessDef[virtEtap] == "undefined" && fitnessRepeat) {
+		 fSeconds = 0;
+		 fEtap = 0;console.log("Stav " +2);
+	 }  else if (fSeconds > fitnessDef[fEtap] && typeof fitnessDef[virtEtap] == "undefined" && !fitnessRepeat) {
+		 fSeconds = 0;
+		 fEtap = 0;console.log("Stav " + 3);
+		 $("#fstop").trigger("vclick");
+		 clearTimeout(fInterval);
+		 return;
+	 }
+	 
+	 
+	 for(var x=0;x<fitnessDef.length;x++) {
+	
+		 $("#fitnessPhases li").eq(x).attr("data-theme", (x == fEtap?'a':"")).text(fitnessDef[x] +" sekund").removeClass("hide");
+	 }
+	 
+	 var minute = parseInt(Math.floor(fSeconds/60));
+	 var seconds = (fSeconds-(minute*60));
+	 if (minute.length < 2) minute = "0" + minute;
+	 if (seconds.length < 2) seconds = "0" + seconds;
+	 $("#fTime").text(minute + ":"+ seconds);
+	 
+	 fInterval = setTimeout("fitness.runFitness()", 1000);
  }
  
  fitness.saveOption = function()
  {
 	 fitnessDef = [];
 
-	 if (!isNaN($("#phase1").val()) && parseInt($("#phase1").val()) != 0) fitnessDef.push(parseInt($("#phase1").val()));
-	 if (!isNaN($("#phase2").val()) && parseInt($("#phase2").val()) != 0) fitnessDef.push(parseInt($("#phase2").val()));
-	 if (!isNaN($("#phase3").val()) && parseInt($("#phase3").val()) != 0) fitnessDef.push(parseInt($("#phase3").val()));
-	 if (!isNaN($("#phase4").val()) && parseInt($("#phase4").val()) != 0) fitnessDef.push(parseInt($("#phase4").val()));
+	 if (!isNaN(parseInt($("#phase1").val())) && parseInt($("#phase1").val()) != 0) fitnessDef.push(parseInt($("#phase1").val()));
+	 if (!isNaN(parseInt($("#phase2").val())) && parseInt($("#phase2").val()) != 0) fitnessDef.push(parseInt($("#phase2").val()));
+	 if (!isNaN(parseInt($("#phase3").val())) && parseInt($("#phase3").val()) != 0) fitnessDef.push(parseInt($("#phase3").val()));
+	 if (!isNaN(parseInt($("#phase4").val())) && parseInt($("#phase4").val()) != 0) fitnessDef.push(parseInt($("#phase4").val()));
 	 
 	 fitnessRepeat = ($("#repeat option:selected").eq(0).val() == "on"?true:false);
 	 $('.ui-dialog').dialog('close');
