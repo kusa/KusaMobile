@@ -62,6 +62,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 	 if (!fitnessStart) {
 		 $("#fitnessPhases li").addClass("hide");
 		 $("#fTime").text("00:00");
+		 $("#fTime").removeClass("falarm");
 		 $("#fstop").addClass("hide");$("#fstart").removeClass("hide");
 	 } else {
 		 
@@ -97,13 +98,17 @@ document.addEventListener("deviceready", onDeviceReady, false);
 	 
 	 for(var x=0;x<fitnessDef.length;x++) {
 	
-		 $("#fitnessPhases li").eq(x).attr("data-theme", (x == fEtap?'a':"")).text(fitnessDef[x] +" sekund").removeClass("hide");
+		 $("#fitnessPhases li").eq(x).removeClass("ui-body-c").addClass("ui-body-"+ (x == fEtap?'a':"c") ).text(fitnessDef[x] +" sekund").removeClass("hide");
 	 }
 	 
 	 var minute = parseInt(Math.floor(fSeconds/60));
 	 var seconds = (fSeconds-(minute*60));
-	 if (minute.length < 2) minute = "0" + minute;
-	 if (seconds.length < 2) seconds = "0" + seconds;
+	 
+	 if ((fitnessDef[fEtap]-fSeconds) < 10) $("#fTime").addClass("falarm");
+	 else  $("#fTime").removeClass("falarm");
+		 
+	 if (minute.toString().length < 2) minute = "0" + minute.toString();
+	 if (seconds.toString().length < 2) seconds = "0" + seconds.toString();
 	 $("#fTime").text(minute + ":"+ seconds);
 	 
 	 fInterval = setTimeout("fitness.runFitness()", 1000);
