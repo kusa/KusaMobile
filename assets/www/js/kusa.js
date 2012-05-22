@@ -63,7 +63,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 	 $("#fitnessPhases li").addClass("hide");
  })
  
- $("#fitnessSave").live("vclick", function(){
+ $("#fitnessSave").live("click", function(){
 	 fitness.saveOption();
  })
  
