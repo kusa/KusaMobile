@@ -50,6 +50,35 @@ document.addEventListener("deviceready", onDeviceReady, false);
     	 $(".connection span").attr("class", "");
  }
 
+ /** Torch **/
+ 
+ $("#torchOn").bind("click", function(){
+	 window.plugins.Torch.isOn( 
+		        function( result ) { if(!result.on)
+		        	 window.plugins.Torch.turnOn( 
+		     		        function() { console.log( "turnOn" ) }                          // success
+		     		    ,   function() { console.log( "error 1" ) }                           // error
+		     		    );	
+		        }      // success
+		    ,   function() { console.log( "error 2" ) }                           // error
+		    );
+	 
+ })
+ 
+  $("#torchOff").bind("click", function(){
+	  
+	  window.plugins.Torch.isOn( 
+		        function( result ) { if(result.on)
+		        	window.plugins.Torch.turnOff( 
+		    		        function() { console.log( "turnOff" ) }                         // success
+		    		    ,   function() { console.log( "error 3" ) }                           // error
+		    		    );	
+		        }      // success
+		    ,   function() { console.log( "error 4" ) }                           // error
+		    );
+	  
+ })
+ 
  /** Fitness **/
  var fitnessDef = []; /*Pocet sekund pro kazdou fazy*/
  var fitnessRepeat = false; /*Opakovani cyklu*/
