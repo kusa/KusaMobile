@@ -8,26 +8,102 @@
 <link rel="stylesheet" href="css/kusa.css" />
 <script type="text/javascript"  src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/cordova-1.7.0.js"></script>
+<script src="js/modernizr.js"></script>
 <script src="js/Torch.js"></script>
 <script src="js/kusa.js"></script>
-<script type="text/javascript">
-
-if ("localStorage" in window && window.localStorage !== null) {
-if (typeof window.localStorage["x"] != "undefined") {
-	window.localStorage["x"] = window.localStorage["x"]  +1;
-} else {
-	window.localStorage["x"] = 0;
-}
-
-alert(window.localStorage["x"])
-} else alert("Vlasnost neni podporovana")
-</script>
+<style>
+ #slider li {border:1px solid black;}
+ #box {
+ 	background-color:red;
+ 	width:100px;
+ 	height:100px;
+ 	position:absolute;
+ 	top:0px;
+ 	left:0px;
+ }
+</style>
 </head>
 <body>
-
+<div id="box"> </div>
 <h1>Zpet</h1>	
 
+<div id='slider'>
+  <ul>
+    <li style='display:block'>jedna</li>
+    <li style='display:none'>dve</li>
+    <li style='display:none'>tri</li>
+  </ul>
+</div>
+<div>
 
+</div>
 <a href="tourch.html">Zpet</a>
+
+<script type="text/javascript">
+Modernizr.load({
+  test: Modernizr.touch && Modernizr.csstransitions,
+  yep: 'js/swipe.min.js',
+  complete: function() {
+    if (Modernizr.touch && Modernizr.csstransitions) {
+      swipeEnabled = true;
+      buildSwipe();
+    }
+  }
+});
+
+function buildSwipe() {
+window.mySwipe = new Swipe(
+  document.getElementById('slider')
+);
+}
+
+var el = document.getElementById("box");  
+var isBlock = null;
+  el.addEventListener("touchstart", handleStart, false);  
+  el.addEventListener("touchend", handleCancel, false);  
+  el.addEventListener("touchcancel", handleCancel, false);  
+  el.addEventListener("touchleave", handleCancel, false);  
+  el.addEventListener("touchmove", handleMove, false);  
+  
+  var ongoingTouches = new Array();
+  
+    function handleStart(evt) {  
+      evt.preventDefault();  
+      var el = document.getElementById("box");  
+      var touches = evt.changedTouches;  
+              
+      for (var i=0; i<touches.length; i++) {  
+      	console.log("Start " + touches[i].identifier); 
+        ongoingTouches.push(touches[i]);  
+      }  
+    }  
+    
+    function handleMove(evt) {  
+      evt.preventDefault();  
+      var el = document.getElementById("box");  
+      var touches = evt.changedTouches;  
+              
+      for (var i=0; i<touches.length; i++) {
+      	console.log("Move " + touches[i].pageY);  
+        if(!isBlock) {
+        	isBlock = touches[i].identifier;
+        	el.style.top=touches[i].pageY + "px";
+        	el.style.left=touches[i].pageX + "px";
+        }
+      }  
+    }  
+    
+    function handleCancel(evt) {  
+	  evt.preventDefault();  
+	  var touches = evt.changedTouches;  
+	    
+	  for (var i=0; i<touches.length; i++) {  
+	  	console.log("End " + touches[i].identifier); 
+	  	if (touches[i].identifier == isBlock)  isBlock = null;
+	    ongoingTouches.splice(i, 1);  // remove it; we're done  
+	  }  
+   } 
+
+</script>
 </body>
 </html>
